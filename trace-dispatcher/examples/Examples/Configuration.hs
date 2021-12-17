@@ -72,7 +72,7 @@ config2 = TraceConfig {
     , tcResourceFreqency = Nothing
     }
 
-testConfig' :: MonadIO m => TraceConfig -> Trace m TestMessage -> Trace m TestMessage -> m ()
+testConfig' :: TraceConfig -> Trace IO TestMessage -> Trace IO TestMessage -> IO ()
 testConfig' tc t1 t2 = do
     let bubbleTracer = appendName "bubble" t2
     configureTracers tc testMessageDocumented [t1, t2]
