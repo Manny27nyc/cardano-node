@@ -951,6 +951,10 @@ instance (Show versionNumber, ToJSON versionNumber, ToJSON agreedOptions)
       , "command" .= show cerr
       ]
 
+protoConnectionHandlerTrace :: ConnectionHandlerTrace
+  ntnVersion
+  ntnVersionData
+protoConnectionHandlerTrace = TrHandshakeSuccess anyProto anyProto
 
 docConnectionManager :: Documented
   (ConnectionManagerTrace
@@ -972,7 +976,7 @@ docConnectionManager = Documented
       []
       ""
   ,  DocMsg
-      (TrConnectError Nothing anyProto anyProto)
+      (TrConnectError Nothing anyProto protoSomeException)
       []
       ""
   ,  DocMsg
@@ -984,7 +988,7 @@ docConnectionManager = Documented
       []
       ""
   ,  DocMsg
-      (TrConnectionHandler anyProto anyProto)
+      (TrConnectionHandler anyProto protoConnectionHandlerTrace)
       []
       ""
   ,  DocMsg
@@ -1287,12 +1291,12 @@ protoLocalAddress = LocalAddress "loopback"
 -- protoIGAssertionLocation = InboundGovernorLoop Nothing protoAbstractState
 
 docInboundGovernorLocal ::
-   Documented (InboundGovernorTrace (ConnectionId LocalAddress))
-docInboundGovernorLocal = docInboundGovernor (protoConnectionId protoLocalAddress)
+   Documented (InboundGovernorTrace LocalAddress)
+docInboundGovernorLocal = docInboundGovernor protoLocalAddress
 
 docInboundGovernorRemote ::
-   Documented (InboundGovernorTrace (ConnectionId SockAddr))
-docInboundGovernorRemote = docInboundGovernor (protoConnectionId protoRemoteAddr)
+   Documented (InboundGovernorTrace SockAddr)
+docInboundGovernorRemote = docInboundGovernor protoRemoteAddr
 
 docInboundGovernor :: peerAddr -> Documented (InboundGovernorTrace peerAddr)
 docInboundGovernor peerAddr = Documented

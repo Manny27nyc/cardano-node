@@ -148,11 +148,11 @@ instance ( Show (BlockNodeToNodeVersion blk)
         => LogFormatting (StartupTrace blk) where
   forHuman = ppStartupInfoTrace
 
-  forMachine _verb (StartupInfo addresses
+  forMachine dtal (StartupInfo addresses
                                  localSocket
                                  supportedNodeToNodeVersions
                                  supportedNodeToClientVersions)
-      = mkObject
+      = mkObject (
         [ "kind" .= String "StartupInfo"
         , "nodeAddresses" .= toJSON (map ppN2NSocketInfo addresses)
         , "localSocket" .= case localSocket of
@@ -160,27 +160,27 @@ instance ( Show (BlockNodeToNodeVersion blk)
               Just a  -> String (pack . ppN2CSocketInfo $ a)
         ]
         ++
-        case verb of
-          MaximalVerbosity ->
+        case dtal of
+          DMaximum ->
             [ "nodeToNodeVersions" .=
-                Aeson.toJSON (map show . Map.assocs $ supportedNodeToNodeVersions)
+                toJSON (map show . Map.assocs $ supportedNodeToNodeVersions)
             , "nodeToClientVersions" .=
-                Aeson.toJSON (map show . Map.assocs $ supportedNodeToClientVersions)
+                toJSON (map show . Map.assocs $ supportedNodeToClientVersions)
             ]
           _ ->
             [ "maxNodeToNodeVersion" .=
                 case Map.maxViewWithKey supportedNodeToNodeVersions of
                   Nothing     -> String "no-supported-version"
-                  Just (v, _) -> String (Text.pack . show $ v)
+                  Just (v, _) -> String (pack . show $ v)
             , "maxNodeToClientVersion" .=
                 case Map.maxViewWithKey supportedNodeToClientVersions of
                   Nothing     -> String "no-supported-version"
-                  Just (v, _) -> String (Text.pack . show $ v)
-            ]
-  forMachine _verb (StartupP2PInfo diffusionMode) =
+                  Just (v, _) -> String (pack . show $ v)
+            ])
+  forMachine _dtal (StartupP2PInfo diffusionMode) =
       mkObject [ "kind" .= String "StartupP2PInfo"
                , "diffusionMode" .= String (showT diffusionMode) ]
-  forMachine _verb (StartupTime time) =
+  forMachine _dtal (StartupTime time) =
       mkObject [ "kind" .= String "StartupTime"
                , "startupTime" .= String ( showT
                                          . (ceiling :: POSIXTime -> Int)
@@ -188,32 +188,32 @@ instance ( Show (BlockNodeToNodeVersion blk)
                                          $ time
                                          )
                ]
-  forMachine _verb (StartupNetworkMagic networkMagic) =
+  forMachine _dtal (StartupNetworkMagic networkMagic) =
       mkObject [ "kind" .= String "StartupNetworkMagic"
                , "networkMagic" .= String (showT . unNetworkMagic
                                           $ networkMagic) ]
-  forMachine _verb (StartupSocketConfigError err) =
+  forMachine _dtal (StartupSocketConfigError err) =
       mkObject [ "kind" .= String "StartupSocketConfigError"
                , "error" .= String (showT err) ]
-  forMachine _verb StartupDBValidation =
+  forMachine _dtal StartupDBValidation =
       mkObject [ "kind" .= String "StartupDBValidation"
                , "message" .= String "start db validation" ]
-  forMachine _verb NetworkConfigUpdate =
+  forMachine _dtal NetworkConfigUpdate =
       mkObject [ "kind" .= String "NetworkConfigUpdate"
                , "message" .= String "ntework configuration update" ]
-  forMachine _verb (NetworkConfigUpdateError err) =
+  forMachine _dtal (NetworkConfigUpdateError err) =
       mkObject [ "kind" .= String "NetworkConfigUpdateError"
                , "error" .= String err ]
-  forMachine _verb (NetworkConfig localRoots publicRoots useLedgerAfter) =
+  forMachine _dtal (NetworkConfig localRoots publicRoots useLedgerAfter) =
       mkObject [ "kind" .= String "NetworkConfig"
                , "localRoots" .= toJSON localRoots
                , "publicRoots" .= toJSON publicRoots
                , "useLedgerAfter" .= UseLedger useLedgerAfter
                ]
-  forMachine _verb P2PWarning =
+  forMachine _dtal P2PWarning =
       mkObject [ "kind" .= String "P2PWarning"
                , "message" .= String p2pWarningMessage ]
-  forMachine _verb P2PWarningDevelopementNetworkProtocols =
+  forMachine _dtal P2PWarningDevelopementNetworkProtocols =
       mkObject [ "kind" .= String "P2PWarningDevelopementNetworkProtocols"
                , "message" .= String p2pWarningDevelopmentNetworkProtocolsMessage ]
   forMachine _ver (WarningDevelopmentNetworkProtocols ntnVersions ntcVersions) =

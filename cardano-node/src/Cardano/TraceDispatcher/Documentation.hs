@@ -660,8 +660,7 @@ docTracers configFileName outputFileName _ = do
       allPublic
     configureTracers trConfig docInboundGovernorRemote [inboundGovernorTr]
     inboundGovernorTrDoc <- documentTracer trConfig inboundGovernorTr
-      (docInboundGovernorRemote :: Documented (InboundGovernorTrace
-                                                (ConnectionId Socket.SockAddr)))
+      (docInboundGovernorRemote :: Documented (InboundGovernorTrace Socket.SockAddr))
 
     localConnectionManagerTr  <-  mkCardanoTracer
       trBase trForward mbTrEKG
@@ -697,8 +696,7 @@ docTracers configFileName outputFileName _ = do
       allPublic
     configureTracers trConfig docInboundGovernorLocal [localInboundGovernorTr]
     localInboundGovernorTrDoc <- documentTracer trConfig localInboundGovernorTr
-      (docInboundGovernorLocal :: Documented (InboundGovernorTrace
-                                                (ConnectionId LocalAddress)))
+      (docInboundGovernorLocal :: Documented (InboundGovernorTrace LocalAddress))
 
 -- DiffusionTracersExtra nonP2P
 

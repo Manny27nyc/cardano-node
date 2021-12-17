@@ -601,7 +601,7 @@ mkDiffusionTracersExtra trBase trForward mbTrEKG _trDataPoint trConfig EnabledP2
       namesForInboundGovernor
       severityInboundGovernor
       allPublic
-    configureTracers trConfig docInboundGovernor [inboundGovernorTr]
+    configureTracers trConfig docInboundGovernorRemote [inboundGovernorTr]
     localConnectionManagerTr  <-  mkCardanoTracer
       trBase trForward mbTrEKG
       "LocalConnectionManager"
@@ -622,7 +622,7 @@ mkDiffusionTracersExtra trBase trForward mbTrEKG _trDataPoint trConfig EnabledP2
       namesForInboundGovernor
       severityInboundGovernor
       allPublic
-    configureTracers trConfig docInboundGovernor [localInboundGovernorTr]
+    configureTracers trConfig docInboundGovernorLocal [localInboundGovernorTr]
     pure $ Diffusion.P2PTracers P2P.TracersExtra
              { P2P.dtTraceLocalRootPeersTracer = Tracer $
                  traceWith localRootPeersTr
