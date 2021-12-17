@@ -71,9 +71,9 @@ configureTracers config (Documented documented) tracers =
     configureAllTrace control (Trace tr) =
       mapM
         (\d ->
-          (catch
+          catch
             (((\ m -> T.traceWith tr (emptyLoggingContext, Just control, m)) . dmPrototype) d)
-            (\ (ex :: SomeException) -> print (show ex ++ " " ++ show d))))
+            (\ (ex :: SomeException) -> print (show ex ++ " " ++ show d)))
         documented
 
 -- | Take a selector function called 'extract'.
