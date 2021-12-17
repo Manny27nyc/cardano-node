@@ -936,7 +936,7 @@ namesForForge'' TraceForgedInvalidBlock {}    = ["ForgedInvalidBlock"]
 namesForForge'' TraceAdoptedBlock {}          = ["AdoptedBlock"]
 
 namesForForge''' :: TraceLabelCreds TraceStartLeadershipCheckPlus -> [Text]
-namesForForge''' (TraceLabelCreds _ (TraceStartLeadershipCheckPlus {}))  =
+namesForForge''' (TraceLabelCreds _ TraceStartLeadershipCheckPlus {})  =
   ["StartLeadershipCheckPlus"]
 
 

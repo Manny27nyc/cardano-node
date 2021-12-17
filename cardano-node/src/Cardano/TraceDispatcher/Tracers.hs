@@ -147,7 +147,7 @@ mkDispatchTracers nodeKernel trBase trForward mbTrEKG trDataPoint trConfig enabl
     let chainDBTr2 = filterTrace
                       (\case (_, Just _, _) -> True
                              (_, Nothing, ChainDB.TraceLedgerReplayEvent
-                                            (LedgerDB.ReplayedBlock {})) -> False
+                                            LedgerDB.ReplayedBlock {}) -> False
                              (_, Nothing, _) -> True)
                       chainDBTr
 

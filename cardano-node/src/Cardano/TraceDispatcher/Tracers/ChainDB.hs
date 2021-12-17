@@ -6,7 +6,9 @@
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE UndecidableInstances #-}
 
+
 {-# OPTIONS_GHC -Wno-orphans  #-}
+
 
 module Cardano.TraceDispatcher.Tracers.ChainDB
   ( severityChainDB
@@ -52,6 +54,7 @@ import           Ouroboros.Consensus.Util.Condense (condense)
 
 import qualified Ouroboros.Network.AnchoredFragment as AF
 
+{-# ANN module ("HLint: ignore Redundant bracket" :: Text) #-}
 
 withAddedToCurrentChainEmptyLimited ::
      Trace IO (ChainDB.TraceEvent blk)

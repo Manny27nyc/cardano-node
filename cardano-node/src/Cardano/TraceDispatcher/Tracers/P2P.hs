@@ -906,7 +906,7 @@ instance (Show addr, Show versionNumber, Show agreedOptions, LogFormatting addr,
           , "info" .= String (pack . show $ info)
           ]
     forHuman = pack . show
-    asMetrics (TrConnectionManagerCounters (ConnectionManagerCounters {..})) =
+    asMetrics (TrConnectionManagerCounters ConnectionManagerCounters {..}) =
           [ IntM
               "cardano.node.connectionManager.fullDuplexConns"
               (fromIntegral fullDuplexConns)

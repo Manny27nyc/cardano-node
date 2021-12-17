@@ -222,20 +222,20 @@ instance ( Show (BlockNodeToNodeVersion blk)
                , "nodeToNodeDevelopmentVersions" .= String (showT ntnVersions)
                , "nodeToClientDevelopmentVersions" .= String (showT ntcVersions)
                ]
-  forMachine _dtal (BINetwork (BasicInfoNetwork {..})) =
+  forMachine _dtal (BINetwork BasicInfoNetwork {..}) =
       mkObject [ "kind" .= String "BasicInfoNetwork"
                , "addresses" .= String (showT niAddresses)
                , "diffusionMode"  .= String (showT niDiffusionMode)
                , "dnsProducers" .= String (showT niDnsProducers)
                , "ipProducers" .= String (showT niIpProducers)
                ]
-  forMachine _dtal (BIByron (BasicInfoByron {..})) =
+  forMachine _dtal (BIByron BasicInfoByron {..}) =
       mkObject [ "kind" .= String "BasicInfoByron"
                , "systemStartTime" .= String (showT bibSystemStartTime)
                , "slotLength"  .= String (showT bibSlotLength)
                , "epochLength" .= String (showT bibEpochLength)
                ]
-  forMachine _dtal (BIShelley (BasicInfoShelleyBased {..})) =
+  forMachine _dtal (BIShelley BasicInfoShelleyBased {..}) =
       mkObject [ "kind" .= String "BasicInfoShelleyBased"
                , "era"  .= String bisEra
                , "systemStartTime" .= String (showT bisSystemStartTime)
@@ -243,7 +243,7 @@ instance ( Show (BlockNodeToNodeVersion blk)
                , "epochLength" .= String (showT bisEpochLength)
                , "slotsPerKESPeriod" .= String (showT bisSlotsPerKESPeriod)
                ]
-  forMachine _dtal (BICommon (BasicInfoCommon {..})) =
+  forMachine _dtal (BICommon BasicInfoCommon {..}) =
       mkObject [ "kind" .= String "BasicInfoCommon"
                , "configPath" .= String (pack biConfigPath)
                , "networkMagic"  .= String (showT biNetworkMagic)
@@ -327,24 +327,24 @@ ppStartupInfoTrace (WarningDevelopmentNetworkProtocols ntnVersions ntcVersions) 
   <> " "
   <> showT ntcVersions
 
-ppStartupInfoTrace (BINetwork (BasicInfoNetwork {..})) =
+ppStartupInfoTrace (BINetwork BasicInfoNetwork {..}) =
   "Addresses " <> showT niAddresses
   <> ", DiffusionMode " <> showT niDiffusionMode
   <> ", DnsProducers " <> showT niDnsProducers
   <> ", IpProducers " <> showT niIpProducers
 
-ppStartupInfoTrace (BIByron (BasicInfoByron {..})) =
+ppStartupInfoTrace (BIByron BasicInfoByron {..}) =
   "Era Byron"
   <> ", Slot length " <> showT bibSlotLength
   <> ", Epoch length " <> showT bibEpochLength
 
-ppStartupInfoTrace (BIShelley (BasicInfoShelleyBased {..})) =
+ppStartupInfoTrace (BIShelley BasicInfoShelleyBased {..}) =
   "Era " <> bisEra
   <> ", Slot length " <> showT bisSlotLength
   <> ", Epoch length " <> showT bisEpochLength
   <> ", Slots per KESPeriod " <> showT bisSlotsPerKESPeriod
 
-ppStartupInfoTrace (BICommon (BasicInfoCommon {..})) =
+ppStartupInfoTrace (BICommon BasicInfoCommon {..}) =
   "Config path " <> pack biConfigPath
   <> ", Network magic " <> showT biNetworkMagic
   <> ", Protocol " <> showT biProtocol

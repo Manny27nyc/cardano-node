@@ -135,7 +135,7 @@ calculateThreadStats :: MonadIO m
   -> ForgeTracerType blk
   -> m ForgingStats
 calculateThreadStats stats _context _mbCtrl
-    (Left (TraceLabelCreds _ (TraceNodeCannotForge {}))) = do
+    (Left (TraceLabelCreds _ TraceNodeCannotForge {})) = do
       mapThreadStats
         stats
         (\fts -> (fts { ftsNodeCannotForgeNum = ftsNodeCannotForgeNum fts + 1}
@@ -150,7 +150,7 @@ calculateThreadStats stats _context _mbCtrl
                    , ftsLastSlot = slot}, Nothing))
         (\fs _ ->  (fs  { fsNodeIsLeaderNum  = fsNodeIsLeaderNum fs + 1 }))
 calculateThreadStats stats _context _mbCtrl
-    (Left (TraceLabelCreds _ (TraceForgedBlock {}))) = do
+    (Left (TraceLabelCreds _ TraceForgedBlock {})) = do
       mapThreadStats
         stats
         (\fts -> (fts { ftsBlocksForgedNum = ftsBlocksForgedNum fts + 1}
