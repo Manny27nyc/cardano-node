@@ -15,8 +15,8 @@ import           Cardano.Tracing.OrphanInstances.Network ()
 
 import           Cardano.BM.Tracing (HasPrivacyAnnotation (..),
                    HasSeverityAnnotation (..), Severity (..), ToObject (..),
-                   TracingVerbosity (..), Transformable (..))
-import           Cardano.BM.Data.Tracer (HasTextFormatter (..), mkObject,
+                   Transformable (..))
+import           Cardano.BM.Data.Tracer (HasTextFormatter (..),
                    trStructuredText)
 
 import           Ouroboros.Consensus.Node.NetworkProtocolVersion
