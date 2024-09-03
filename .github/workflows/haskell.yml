@@ -216,12 +216,12 @@ jobs:
         prerelease: false
 
     - name: Download Artifact (linux)
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v4.1.7
       with:
         name: artifacts-ubuntu-latest
 
     - name: Download Artifact (macOS)
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v4.1.7
       with:
         name: artifacts-macOS-latest
 
